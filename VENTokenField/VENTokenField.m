@@ -43,6 +43,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
 @property (strong, nonatomic) VENBackspaceTextField *invisibleTextField;
 @property (strong, nonatomic) VENBackspaceTextField *inputTextField;
 @property (strong, nonatomic) UIColor *colorScheme;
+@property (strong, nonatomic) UIColor *unhighlightedColor;
 @property (strong, nonatomic) UILabel *collapsedLabel;
 
 @end
@@ -93,6 +94,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
     self.tokenPadding = VENTokenFieldDefaultTokenPadding;
     self.minInputWidth = VENTokenFieldDefaultMinInputWidth;
     self.colorScheme = [UIColor blueColor];
+    self.unhighlightedColor = [UIColor blackColor];
     self.toLabelTextColor = [UIColor colorWithRed:112/255.0f green:124/255.0f blue:124/255.0f alpha:1.0f];
     self.inputTextFieldTextColor = [UIColor colorWithRed:38/255.0f green:39/255.0f blue:41/255.0f alpha:1.0f];
     
@@ -154,6 +156,14 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
     self.inputTextField.tintColor = color;
     for (VENToken *token in self.tokens) {
         [token setColorScheme:color];
+    }
+}
+
+- (void)setUnhighlightedColor:(UIColor *)color {
+    _unhighlightedColor = color;
+
+    for (VENToken *token in self.tokens) {
+        [token setUnhighlightedColor:color];
     }
 }
 
@@ -309,6 +319,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
 
         [token setTitleText:[NSString stringWithFormat:@"%@,", title]];
         token.colorScheme = [self colorSchemeForTokenAtIndex:i];
+        token.unhighlightedColor = [self unhighlightedColorForTokenAtIndex:i];
         
         [self.tokens addObject:token];
 
@@ -512,6 +523,10 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
     }
     
     return self.colorScheme;
+}
+
+- (UIColor *)unhighlightedColorForTokenAtIndex:(NSUInteger)index {
+    return self.unhighlightedColor;
 }
 
 #pragma mark - Data Source

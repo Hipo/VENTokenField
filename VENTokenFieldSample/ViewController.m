@@ -19,16 +19,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.names = [NSMutableArray array];
+    //    self.names = [NSMutableArray array];
+
+    self.names = [NSMutableArray arrayWithObjects:@"Serkan Terek", @"Omurden Jenkins", @"Hipo1 Baba",
+                  @"Kat Gmails", @"Mert Ahmet Gunes", @"hipo hipomail test", @"Marco Lo", @"Deniz Bulut",
+                  @"Kathryn Corro", @"Baris Emre Efe2", @"baris emrrrr", @"Arzu Sendag", @"Kathryn Bond", nil];
+
     self.tokenField.delegate = self;
     self.tokenField.dataSource = self;
     self.tokenField.placeholderText = NSLocalizedString(@"Enter names here", nil);
     self.tokenField.toLabelText = NSLocalizedString(@"Post to:", nil);
-    [self.tokenField setColorScheme:[UIColor colorWithRed:61/255.0f green:149/255.0f blue:206/255.0f alpha:1.0f]];
+    [self.tokenField setColorScheme:[UIColor orangeColor]];
+    [self.tokenField setUnhighlightedColor:[UIColor grayColor]];
+
     self.tokenField.delimiters = @[@",", @";", @"--"];
     [self.tokenField becomeFirstResponder];
 }
-
 - (IBAction)didTapCollapseButton:(id)sender
 {
     [self.tokenField collapse];
