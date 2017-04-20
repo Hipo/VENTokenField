@@ -97,6 +97,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
     self.unhighlightedColor = [UIColor blackColor];
     self.toLabelTextColor = [UIColor colorWithRed:112/255.0f green:124/255.0f blue:124/255.0f alpha:1.0f];
     self.inputTextFieldTextColor = [UIColor colorWithRed:38/255.0f green:39/255.0f blue:41/255.0f alpha:1.0f];
+    self.inputTextFieldFont = [UIFont fontWithName:@"HelveticaNeue" size:15.5];
     
     // Accessing bare value to avoid kicking off a premature layout run.
     _toLabelText = NSLocalizedString(@"To:", nil);
@@ -135,6 +136,12 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
 {
     _inputTextFieldTextColor = inputTextFieldTextColor;
     self.inputTextField.textColor = _inputTextFieldTextColor;
+}
+
+- (void)setInputTextFieldFont:(UIFont *)inputTextFieldFont {
+    _inputTextFieldFont = inputTextFieldFont;
+
+    self.inputTextField.font = _inputTextFieldFont;
 }
 
 - (void)setToLabelTextColor:(UIColor *)toLabelTextColor
@@ -309,6 +316,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
 {
     for (NSUInteger i = 0; i < [self numberOfTokens]; i++) {
         NSString *title = [self titleForTokenAtIndex:i];
+        UIFont *font = [self fontForTokenAtIndex:i];
         VENToken *token = [[VENToken alloc] init];
 
         __weak VENToken *weakToken = token;
@@ -318,6 +326,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
         };
 
         [token setTitleText:[NSString stringWithFormat:@"%@,", title]];
+        [token setTitleFont:font];
         token.colorScheme = [self colorSchemeForTokenAtIndex:i];
         token.unhighlightedColor = [self unhighlightedColorForTokenAtIndex:i];
         
@@ -415,7 +424,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
         _inputTextField = [[VENBackspaceTextField alloc] init];
         [_inputTextField setKeyboardType:self.inputTextFieldKeyboardType];
         _inputTextField.textColor = self.inputTextFieldTextColor;
-        _inputTextField.font = [UIFont fontWithName:@"HelveticaNeue" size:15.5];
+        _inputTextField.font = self.inputTextFieldFont;
         _inputTextField.autocorrectionType = self.autocorrectionType;
         _inputTextField.autocapitalizationType = self.autocapitalizationType;
         _inputTextField.tintColor = self.colorScheme;
@@ -538,6 +547,14 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
     }
     
     return [NSString string];
+}
+
+- (UIFont *)fontForTokenAtIndex:(NSUInteger)index {
+    if ([self.dataSource respondsToSelector:@selector(tokenField:titleFontForTokenAtIndex:)]) {
+        return [self.dataSource tokenField:self titleFontForTokenAtIndex:index];
+    }
+
+    return [UIFont new];
 }
 
 - (NSUInteger)numberOfTokens

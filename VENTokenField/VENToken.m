@@ -59,6 +59,10 @@
     [self.titleLabel sizeToFit];
 }
 
+- (void)setTitleFont:(UIFont *)font {
+    self.titleLabel.font = font;
+}
+
 - (void)setHighlighted:(BOOL)highlighted
 {
     _highlighted = highlighted;

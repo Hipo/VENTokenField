@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol VENTokenFieldDataSource <NSObject>
 @optional
 - (NSString *)tokenField:(VENTokenField *)tokenField titleForTokenAtIndex:(NSUInteger)index;
+- (UIFont *)tokenField:(VENTokenField *)tokenField titleFontForTokenAtIndex:(NSUInteger)index;
 - (NSUInteger)numberOfTokensInTokenField:(VENTokenField *)tokenField;
 - (NSString *)tokenFieldCollapsedText:(VENTokenField *)tokenField;
 - (UIColor *)tokenField:(VENTokenField *)tokenField colorSchemeForTokenAtIndex:(NSUInteger)index;
@@ -73,6 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIColor *toLabelTextColor;
 @property (strong, nonatomic, nullable) NSString *toLabelText;
 @property (strong, nonatomic) UIColor *inputTextFieldTextColor;
+@property (strong, nonatomic) UIFont *inputTextFieldFont;
 
 @property (strong, nonatomic) UILabel *toLabel;
 

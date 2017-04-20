@@ -29,8 +29,11 @@
     self.tokenField.dataSource = self;
     self.tokenField.placeholderText = NSLocalizedString(@"Enter names here", nil);
     self.tokenField.toLabelText = NSLocalizedString(@"Post to:", nil);
+    self.tokenField.inputTextFieldFont = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0];
     [self.tokenField setColorScheme:[UIColor orangeColor]];
     [self.tokenField setUnhighlightedColor:[UIColor grayColor]];
+
+    self.tokenField.tokenPadding = 0.0;
 
     self.tokenField.delimiters = @[@",", @";", @"--"];
     [self.tokenField becomeFirstResponder];
@@ -62,6 +65,10 @@
 
 
 #pragma mark - VENTokenFieldDataSource
+
+- (UIFont *)tokenField:(VENTokenField *)tokenField titleFontForTokenAtIndex:(NSUInteger)index {
+    return [UIFont fontWithName:@"AvenirNext-Medium" size:14.0];
+}
 
 - (NSString *)tokenField:(VENTokenField *)tokenField titleForTokenAtIndex:(NSUInteger)index
 {
