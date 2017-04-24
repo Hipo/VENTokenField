@@ -28,8 +28,8 @@
 
 static const CGFloat VENTokenFieldDefaultVerticalInset      = 7.0;
 static const CGFloat VENTokenFieldDefaultHorizontalInset    = 15.0;
-static const CGFloat VENTokenFieldDefaultToLabelPadding     = 5.0;
-static const CGFloat VENTokenFieldDefaultTokenPadding       = 2.0;
+static const CGFloat VENTokenFieldDefaultToLabelPadding     = 0.0;
+static const CGFloat VENTokenFieldDefaultTokenPadding       = 5.0;
 static const CGFloat VENTokenFieldDefaultMinInputWidth      = 80.0;
 static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
 
@@ -100,7 +100,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
     self.inputTextFieldFont = [UIFont fontWithName:@"HelveticaNeue" size:15.5];
     
     // Accessing bare value to avoid kicking off a premature layout run.
-    _toLabelText = NSLocalizedString(@"To:", nil);
+//    _toLabelText = NSLocalizedString(@"To:", nil);
 
     self.originalHeight = CGRectGetHeight(self.frame);
 
@@ -338,6 +338,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
             *currentY += token.height;
             *currentX = 0;
             CGFloat tokenWidth = token.width;
+
             if (tokenWidth > self.scrollView.contentSize.width) { // token is wider than max width
                 tokenWidth = self.scrollView.contentSize.width;
             }
