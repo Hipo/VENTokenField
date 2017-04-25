@@ -23,13 +23,14 @@
 
     self.names = [NSMutableArray arrayWithObjects:@"Serkan Terek", @"Omurden Jenkins", @"Hipo1 Baba",
                   @"Kat Gmails", @"Mert Ahmet Gunes", @"hipo hipomail test", @"Marco Lo", @"Deniz Bulut",
-                  @"Kathryn Corro", @"Baris Emre Efe2", @"baris emrrrr", @"Arzu Sendag", @"Kathryn Bond", nil];
+                  @"Kathryn Corro", @"Baris Emre Efe2", @"baris emrrrr", @"Arzu Sendag", @"Kathryn Bond", @"Eray test", @"hipo hipo", nil];
 
     self.tokenField.delegate = self;
     self.tokenField.dataSource = self;
     self.tokenField.placeholderText = NSLocalizedString(@"Enter names here", nil);
-//    self.tokenField.toLabelText = NSLocalizedString(@"Post to:", nil);
     self.tokenField.inputTextFieldFont = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0];
+    self.tokenField.toLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0];
+    self.tokenField.toLabel.textColor = [UIColor orangeColor];
     [self.tokenField setColorScheme:[UIColor orangeColor]];
     [self.tokenField setUnhighlightedColor:[UIColor grayColor]];
 

@@ -26,12 +26,15 @@
 #import "VENToken.h"
 #import "VENBackspaceTextField.h"
 
-static const CGFloat VENTokenFieldDefaultVerticalInset      = 7.0;
-static const CGFloat VENTokenFieldDefaultHorizontalInset    = 15.0;
-static const CGFloat VENTokenFieldDefaultToLabelPadding     = 0.0;
-static const CGFloat VENTokenFieldDefaultTokenPadding       = 5.0;
-static const CGFloat VENTokenFieldDefaultMinInputWidth      = 80.0;
-static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
+static const CGFloat VENTokenFieldDefaultVerticalInset                 = 7.0;
+static const CGFloat VENTokenFieldDefaultHorizontalInset               = 15.0;
+static const CGFloat VENTokenFieldDefaultToLabelPadding                = 10.0;
+static const CGFloat VENTokenFieldDefaultTokenPadding                  = 5.0;
+static const CGFloat VENTokenFieldDefaultMinInputWidth                 = 80.0;
+static const CGFloat VENTokenFieldDefaultMaxHeight                     = 150.0;
+
+static const CGFloat VENTokenFieldDefaultAdditionalInternalLeftPadding = 30.0;
+
 
 
 @interface VENTokenField () <VENBackspaceTextFieldDelegate>
@@ -100,7 +103,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
     self.inputTextFieldFont = [UIFont fontWithName:@"HelveticaNeue" size:15.5];
     
     // Accessing bare value to avoid kicking off a premature layout run.
-//    _toLabelText = NSLocalizedString(@"To:", nil);
+    _toLabelText = NSLocalizedString(@"To:", nil);
 
     self.originalHeight = CGRectGetHeight(self.frame);
 
@@ -271,14 +274,18 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
     if (inputTextFieldWidth < self.minInputWidth) {
         inputTextFieldWidth = self.scrollView.contentSize.width;
         *currentY += [self heightForToken];
-        *currentX = 0;
+        *currentX = VENTokenFieldDefaultAdditionalInternalLeftPadding;
     }
 
     VENBackspaceTextField *inputTextField = self.inputTextField;
     if (clearInput) {
         inputTextField.text = @"";
     }
-    inputTextField.frame = CGRectMake(*currentX, *currentY + 1, inputTextFieldWidth, [self heightForToken] - 1);
+    inputTextField.frame = CGRectMake(*currentX,
+                                      *currentY + 1,
+                                      inputTextFieldWidth - VENTokenFieldDefaultAdditionalInternalLeftPadding,
+                                      [self heightForToken] - 1);
+
     inputTextField.tintColor = self.colorScheme;
     [self.scrollView addSubview:inputTextField];
 }
@@ -302,7 +309,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
     
     CGRect newFrame = self.toLabel.frame;
     newFrame.origin = origin;
-    
+
     [self.toLabel sizeToFit];
     newFrame.size.width = CGRectGetWidth(self.toLabel.frame);
     
@@ -332,14 +339,14 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
         
         [self.tokens addObject:token];
 
-        if (*currentX + token.width <= self.scrollView.contentSize.width) { // token fits in current line
+        if (*currentX + token.width <= self.scrollView.contentSize.width - VENTokenFieldDefaultAdditionalInternalLeftPadding) { // token fits in current line
             token.frame = CGRectMake(*currentX, *currentY, token.width, token.height);
         } else {
             *currentY += token.height;
-            *currentX = 0;
+            *currentX = VENTokenFieldDefaultAdditionalInternalLeftPadding;
             CGFloat tokenWidth = token.width;
 
-            if (tokenWidth > self.scrollView.contentSize.width) { // token is wider than max width
+            if (tokenWidth > self.scrollView.contentSize.width - VENTokenFieldDefaultAdditionalInternalLeftPadding) { // token is wider than max width
                 tokenWidth = self.scrollView.contentSize.width;
             }
             token.frame = CGRectMake(*currentX, *currentY, tokenWidth, token.height);
